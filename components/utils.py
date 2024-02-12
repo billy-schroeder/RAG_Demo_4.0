@@ -40,6 +40,9 @@ def load_document(file_path, file_ext):
 
 def load_multiple_documents(file_infos):
     documents_to_text = []
+    documents_to_text.extend(PyPDFLoader(file_path='ASOPs/asop013_133.pdf').load())
+    documents_to_text.extend(PyPDFLoader(file_path='ASOPs/asop039_156.pdf').load())
+    documents_to_text.extend(PyPDFLoader(file_path='ASOPs/asop043_159.pdf').load())
     for file_path, file_ext in file_infos:
         documents_to_text.extend(load_document(file_path, file_ext))
     return documents_to_text
@@ -75,7 +78,7 @@ def create_conservational_chain(vector_store, openai_keys):
     human_template = "{question}"
     human_message_prompt = HumanMessagePromptTemplate.from_template(human_template)
     qa_prompt = ChatPromptTemplate.from_messages([system_message_prompt, human_message_prompt])
-    model = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=1, openai_api_key=openai_keys)
+    model = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=.3, openai_api_key=openai_keys)
     memory = ConversationBufferMemory(memory_key='chat_history',return_messages=True)
     qa_chain = ConversationalRetrievalChain.from_llm(llm=model, retriever=vector_store.as_retriever(), memory=memory, combine_docs_chain_kwargs={'prompt': qa_prompt})
     return qa_chain

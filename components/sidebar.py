@@ -66,7 +66,7 @@ def sidebar():
             openai_keys = st.text_input("OpenAI API Key", type='password')
 
         st.markdown("***")
-        complete_button = st.button("Complete configuration", disabled=not (saved_files_info and openai_keys))
+        complete_button = st.button("Complete configuration", disabled=not (openai_keys))
 
         if complete_button:
             return saved_files_info, openai_keys

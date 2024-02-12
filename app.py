@@ -23,7 +23,7 @@ def main():
         st.session_state.is_api_key_valid = None
 
     # Load the QA chain if documents and OpenAI keys are provided, and handle OpenAI AuthenticationError
-    if saved_files_info and openai_keys and not st.session_state.qa_chain:
+    if openai_keys and not st.session_state.qa_chain:
         try:
             st.session_state.qa_chain = load_qa_chain(saved_files_info, openai_keys)
             st.session_state.is_api_key_valid = True  # Valid API key
